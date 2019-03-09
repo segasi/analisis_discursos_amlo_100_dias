@@ -181,3 +181,8 @@ discursos_amlo <-
          texto = str_replace(texto, "VE-157 Versión estenográfica Chihuahua, Chihuahua, 2 de marzo de 2019.*PRESIDENTE ANDRÉS MANUEL LÓPEZ OBRADOR:", ""), # Eliminar palabras que no corresponde a AMLO en el renglón con id 73
          texto = str_replace(texto, "PRESIDENTE ANDRÉS MANUEL LÓPEZ OBRADOR: Amigas", "Amigas") # Eliminar palabras que no corresponde a AMLO en los renglones con id 39, 40, 41 y 42
   )
+
+
+# Generar archivo .xls con los discursos de AMLO ----
+WriteXLS(discursos_amlo, ExcelFileName = "04_datos_output/discursos_amlo.xls",
+         Encoding = c("UTF-8"))
