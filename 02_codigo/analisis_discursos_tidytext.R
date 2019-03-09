@@ -80,9 +80,10 @@ bd_palabras %>%
   scale_x_continuous(breaks = seq(200, 3200, 400), labels = comma) +
   scale_y_continuous(breaks = seq(0, 16, 2)) +
   labs(title = str_wrap(str_to_upper("Distribución del número de palabras por discurso mencionadas por AMLO"), width = 60),
-       subtitle = "La gráfica incluye datos de los 76 discursos pronunciados por AMLO entre el 1 de diciembre de 2018 y el 6 de marzo de 2019.\nLa gráfica excluye stopwords.",
+       subtitle = "La gráfica incluye datos de los 76 discursos pronunciados por AMLO entre el 1 de diciembre de 2018 y el 6 de marzo de 2019.",
        x = "\nNúmero de palabras",
-       y = "Número de discursos\n") +
+       y = "Número de discursos\n",
+       caption = "\nCarlos Bravo Regidor / @carlosbravoreg / Sebastián Garrido de Sierra / @segasi / Fuente: Presidencia de la República") +
   tema +
   ggsave("03_graficas/distribucion_frecuencia_palabras_por_discurso.png", width = 15, height = 10, dpi = 200)
 
@@ -99,7 +100,10 @@ bd_palabras %>%
   geom_text_wordcloud(shape = "circle", area_corr_power = 1) +
   scale_radius(range = c(0, 20), limits = c(0, NA)) +
   scale_color_gradient(low = "grey60", high = "darkred") +
+  labs(caption = "\nCarlos Bravo Regidor / @carlosbravoreg / Sebastián Garrido de Sierra / @segasi / Fuente: Presidencia de la República") +
   tema +
+  theme(plot.caption = element_text(size = 8)) +
+  
   ggsave("03_graficas/100_palabras_mas_frecuentes_amlo.png", width = 7, height = 5, dpi = 300)
 
 
@@ -115,7 +119,8 @@ bd_palabras %>%
   labs(title = "Las 30 palabras más mencionadas por AMLO en sus discursos",
        subtitle = "Cifras calculadas después de eliminar stopwords",
        x = NULL,
-       y = "\nNúm. de veces pronunciada") +
+       y = "\nNúm. de veces pronunciada",
+       caption = "\nCarlos Bravo Regidor / @carlosbravoreg / Sebastián Garrido de Sierra / @segasi / Fuente: Presidencia de la República") +
   tema +
   ggsave("03_graficas/30_palabras_mas_mencionadas_por_amlo.png", width = 15, height = 10, dpi = 200)
 
@@ -125,13 +130,15 @@ set.seed(25)
 bd_bigramas %>%
   count(bigrama, sort = TRUE) %>% 
   mutate(ranking = min_rank(-n)) %>% 
-  filter(ranking <= 100)
+  filter(ranking <= 100) %>% 
 mutate(angulo = 90 * sample(c(0, 1), n(), replace = TRUE, prob = c(60, 40))) %>% 
   ggplot(aes(label = bigrama, size = n, color = n, angle = angulo)) +
   geom_text_wordcloud(shape = "circle", area_corr_power = 1) +
   scale_radius(range = c(0, 20), limits = c(0, NA)) +
   scale_color_gradient(low = "grey60", high = "darkred") +
+  labs(caption = "\nCarlos Bravo Regidor / @carlosbravoreg / Sebastián Garrido de Sierra / @segasi / Fuente: Presidencia de la República") +
   tema +
+  theme(plot.caption = element_text(size = 10)) +
   ggsave("03_graficas/100_bigramas_mas_frecuentes_amlo.png", width = 9, height = 7, dpi = 300)
 
 ### Gráfica de los 30 bigramas más mencionadas por AMLO en sus discursos ----
@@ -147,7 +154,8 @@ bd_bigramas %>%
   labs(title = "Los 30 bigramas más mencionadas por AMLO en sus discursos",
        subtitle = "Cifras calculadas después de eliminar stopwords",
        x = NULL,
-       y = "\nNúm. de veces pronunciada") +
+       y = "\nNúm. de veces pronunciada",
+       caption = "\nCarlos Bravo Regidor / @carlosbravoreg / Sebastián Garrido de Sierra / @segasi / Fuente: Presidencia de la República") +
   tema +
   ggsave("03_graficas/30_bigramas_mas_mencionadas_por_amlo.png", width = 15, height = 10, dpi = 200)
 
@@ -164,8 +172,9 @@ bd_trigramas %>%
   labs(title = "Los 30 trigramas más mencionadas por AMLO en sus discursos",
        subtitle = "Cifras calculadas después de eliminar stopwords",
        x = NULL,
-       y = "\nNúm. de veces pronunciada") +
-  tema +
+       y = "\nNúm. de veces pronunciada",
+       caption = "\nCarlos Bravo Regidor / @carlosbravoreg / Sebastián Garrido de Sierra / @segasi / Fuente: Presidencia de la República") +
+       tema +
   ggsave("03_graficas/30_trigramas_mas_mencionadas_por_amlo.png", width = 15, height = 10, dpi = 200)
 
 
@@ -181,6 +190,7 @@ bd_cuatrigramas %>%
   labs(title = "Los 30 cuatrigramas más mencionadas por AMLO en sus\ndiscursos",
        subtitle = "Cifras calculadas después de eliminar stopwords",
        x = NULL,
-       y = "\nNúm. de veces pronunciada") +
+       y = "\nNúm. de veces pronunciada",
+       caption = "\nCarlos Bravo Regidor / @carlosbravoreg / Sebastián Garrido de Sierra / @segasi / Fuente: Presidencia de la República") +
   tema +
   ggsave("03_graficas/30_cuatrigramas_mas_mencionadas_por_amlo.png", width = 15, height = 10, dpi = 200)
