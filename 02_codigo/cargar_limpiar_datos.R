@@ -162,3 +162,22 @@ discursos_amlo <-
   discursos_amlo %>% 
   mutate(discurso_id = row_number()) %>% 
   select(discurso_id, everything())
+
+
+# Elimiar palabras no mencionadas por AMLO en sus eventos ----
+
+# En diversos eventos participan otros oradores (e.g., militares respondiendo a coro al presidente, moderadores presentándolo, personas en el público que le hacen preguntas, funcionarios públicos, etc.). El siguiente chunk de código permite eliminar las palabras dichas por oradores direrentes a AMLO que pudimos detectar.
+
+discursos_amlo <- 
+  discursos_amlo %>% 
+  mutate(texto = str_replace(texto, "VOCES A CORO:.*PRESIDENTE ANDRÉS MANUEL LÓPEZ OBRADOR:", ""), # Eliminar palabras que no corresponde a AMLO en el renglón con id 
+         texto = str_replace(texto, "MODERADOR: Presiden la III Sesión Extraordinaria.*PRESIDENTE ANDRÉS MANUEL LÓPEZ OBRADOR:", ""), # Eliminar palabras que no corresponde a AMLO en los renglones con id 36
+         texto = str_replace(texto, "Santa Lucía, Estado de México, 10 de febrero de 2019 Celebración.*PRESIDENTE ANDRÉS MANUEL LÓPEZ OBRADOR:", ""), # Eliminar palabras que no corresponde a AMLO en el renglón con id 53
+         texto = str_replace(texto, "Cuautla, Morelos, 10 de febrero de 2019 Propuesta del gobierno federal: .*PRESIDENTE ANDRÉS MANUEL LÓPEZ OBRADOR:", ""), # Eliminar palabras que no corresponde a AMLO en el renglón con id 54
+         texto = str_replace(texto, "INTERVENCIÓN:.*PRESIDENTE ANDRÉS MANUEL LÓPEZ OBRADOR:", ""), # Eliminar palabras que no corresponde a AMLO en el renglón con id 18 
+         texto = str_replace(texto, "JOVEN:.*PRESIDENTE ANDRÉS MANUEL LÓPEZ OBRADOR:", ""), # Eliminar palabras que no corresponde a AMLO en el renglón con id 32 
+         texto = str_replace(texto, "Versión estenográfica Tamazula, Durango, 16 de.*PRESIDENTE ANDRÉS MANUEL LÓPEZ OBRADOR:", ""), # Eliminar palabras que no corresponde a AMLO en el renglón con id 58
+         texto = str_replace(texto, "Versión estenográfica Mazatlán, Sinaloa, 16 de febrero de 2019.*PRESIDENTE ANDRÉS MANUEL LÓPEZ OBRADOR:", ""), # Eliminar palabras que no corresponde a AMLO en el renglón con id 59
+         texto = str_replace(texto, "VE-157 Versión estenográfica Chihuahua, Chihuahua, 2 de marzo de 2019.*PRESIDENTE ANDRÉS MANUEL LÓPEZ OBRADOR:", ""), # Eliminar palabras que no corresponde a AMLO en el renglón con id 73
+         texto = str_replace(texto, "PRESIDENTE ANDRÉS MANUEL LÓPEZ OBRADOR: Amigas", "Amigas") # Eliminar palabras que no corresponde a AMLO en los renglones con id 39, 40, 41 y 42
+  )
