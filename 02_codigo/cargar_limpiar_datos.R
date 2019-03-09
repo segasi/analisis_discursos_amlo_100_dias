@@ -132,3 +132,19 @@ fechas_discursos <-
                            html_text() %>%
                            paste0(collapse = " ")),
          fecha = str_replace(fecha, "Presidencia de la República  ", "")) # Limpiar fechas eliminando la cadena de texto "Presidencia de la República  " de las mismas
+
+
+# Extraer títulos de discursos ----
+titulos_discursos <- 
+  url_disc_amlo %>% 
+  mutate(titulo = map(.x = url,
+                      .f = ~ read_html(.) %>% 
+                        html_nodes("title") %>% 
+                        html_text()))
+
+# Cambiar tipo y limpiar columna de titulo 
+titulos_discursos <- 
+  titulos_discursos %>% 
+  mutate(titulo = unlist(titulo), 
+         titulo = str_replace_all(titulo, "\\n", ""),
+         titulo = str_trim(titulo))
