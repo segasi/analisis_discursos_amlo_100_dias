@@ -101,3 +101,21 @@ bd_palabras %>%
   scale_color_gradient(low = "grey60", high = "darkred") +
   tema +
   ggsave("03_graficas/100_palabras_mas_frecuentes_amlo.png", width = 7, height = 5, dpi = 300)
+
+
+
+### Gráfica de barras de las 30 palabras más mencionadas por AMLO en sus discursos ----
+bd_palabras %>%
+  count(word, sort = TRUE) %>% 
+  mutate(ranking = min_rank(-n)) %>% 
+  filter(ranking <= 30) %>% 
+  ggplot(aes(fct_reorder(word, n), n)) +
+  geom_col() +
+  coord_flip() +
+  scale_y_continuous(breaks = seq(0, 2000, 250)) +
+  labs(title = "Las 30 palabras más mencionadas por AMLO en sus discursos",
+       subtitle = "Cifras calculadas después de eliminar stopwords",
+       x = NULL,
+       y = "\nNúm. de veces pronunciada") +
+  tema +
+  ggsave("03_graficas/30_palabras_mas_mencionadas_por_amlo.png", width = 15, height = 10, dpi = 200)
