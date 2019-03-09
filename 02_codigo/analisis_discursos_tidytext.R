@@ -166,3 +166,18 @@ bd_trigramas %>%
        y = NULL) +
   tema +
   ggsave("03_graficas/30_trigramas_mas_mencionadas_por_amlo.png", width = 15, height = 10, dpi = 200)
+
+
+### Gráfica de los 30 cuatrigramas más mencionadas por AMLO en sus discursos ----
+bd_cuatrigramas %>%
+  count(cuatrigrama, sort = TRUE) %>% 
+  mutate(ranking = min_rank(-n)) %>% 
+  filter(ranking <= 30) %>% 
+  ggplot(aes(fct_reorder(cuatrigrama, n), n)) +
+  geom_col() +
+  coord_flip() +
+  labs(title = "Los 30 cuatrigramas más mencionadas por AMLO en sus discursos",
+       subtitle = "Cifras calculadas después de eliminar stopwords",
+       x = NULL,
+       y = NULL) +
+  ggsave("03_graficas/30_cuatrigramas_mas_mencionadas_por_amlo.png", width = 15, height = 10, dpi = 200)
