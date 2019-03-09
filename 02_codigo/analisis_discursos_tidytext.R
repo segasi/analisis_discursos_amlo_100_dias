@@ -133,3 +133,20 @@ mutate(angulo = 90 * sample(c(0, 1), n(), replace = TRUE, prob = c(60, 40))) %>%
   scale_color_gradient(low = "grey60", high = "darkred") +
   tema +
   ggsave("03_graficas/100_bigramas_mas_frecuentes_amlo.png", width = 9, height = 7, dpi = 300)
+
+### Gráfica de los 30 bigramas más mencionadas por AMLO en sus discursos ----
+bd_bigramas %>%
+  count(bigrama, sort = TRUE) %>% 
+  mutate(ranking = min_rank(-n)) %>% 
+  filter(ranking <= 30) %>% 
+  arrange(-n)
+ggplot(aes(fct_reorder(bigrama, n), n)) +
+  geom_col() +
+  coord_flip() +
+  # scale_y_continuous(breaks = seq(0, 2000, 250)) +
+  labs(title = "Los 30 bigramas más mencionadas por AMLO en sus discursos",
+       subtitle = "Cifras calculadas después de eliminar stopwords",
+       x = NULL,
+       y = NULL) +
+  tema +
+  ggsave("03_graficas/30_bigramas_mas_mencionadas_por_amlo.png", width = 15, height = 10, dpi = 200)
