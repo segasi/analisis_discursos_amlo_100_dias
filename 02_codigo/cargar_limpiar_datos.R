@@ -155,3 +155,10 @@ discursos_amlo <-
   left_join(fechas_discursos) %>% 
   left_join(titulos_discursos) %>% 
   select(fecha, titulo, texto, url, -cuerpo)
+
+
+# Generar columna con id númerico por discurso ----
+discursos_amlo <- 
+  discursos_amlo %>% 
+  mutate(discurso_id = row_number()) %>% 
+  select(discurso_id, everything())
