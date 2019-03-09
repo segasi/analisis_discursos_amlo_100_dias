@@ -103,7 +103,6 @@ bd_palabras %>%
   ggsave("03_graficas/100_palabras_mas_frecuentes_amlo.png", width = 7, height = 5, dpi = 300)
 
 
-
 ### Gráfica de barras de las 30 palabras más mencionadas por AMLO en sus discursos ----
 bd_palabras %>%
   count(word, sort = TRUE) %>% 
@@ -119,3 +118,18 @@ bd_palabras %>%
        y = "\nNúm. de veces pronunciada") +
   tema +
   ggsave("03_graficas/30_palabras_mas_mencionadas_por_amlo.png", width = 15, height = 10, dpi = 200)
+
+
+### Nube de los 100 bigramas más mencionados por AMLO en sus discursos ----
+set.seed(25)
+bd_bigramas %>%
+  count(bigrama, sort = TRUE) %>% 
+  mutate(ranking = min_rank(-n)) %>% 
+  filter(ranking <= 100)
+mutate(angulo = 90 * sample(c(0, 1), n(), replace = TRUE, prob = c(60, 40))) %>% 
+  ggplot(aes(label = bigrama, size = n, color = n, angle = angulo)) +
+  geom_text_wordcloud(shape = "circle", area_corr_power = 1) +
+  scale_radius(range = c(0, 20), limits = c(0, NA)) +
+  scale_color_gradient(low = "grey60", high = "darkred") +
+  tema +
+  ggsave("03_graficas/100_bigramas_mas_frecuentes_amlo.png", width = 9, height = 7, dpi = 300)
