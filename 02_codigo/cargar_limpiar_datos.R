@@ -118,3 +118,17 @@ discursos_amlo <-
   mutate(texto = map_chr(cuerpo, ~ html_nodes(.x, "p") %>%
                            html_text() %>%
                            paste0(collapse = " ")))
+
+# Extraer fechas de discursos ----
+fechas_discursos <- 
+  url_disc_amlo %>% 
+  mutate(fecha = map(.x = url,
+                     .f = ~ read_html(.) %>% 
+                       html_nodes(".border-box")))
+
+fechas_discursos <- 
+  fechas_discursos %>% 
+  mutate(fecha = map_chr(fecha, ~ html_nodes(.x, "dd") %>%
+                           html_text() %>%
+                           paste0(collapse = " ")),
+         fecha = str_replace(fecha, "Presidencia de la República  ", "")) # Limpiar fechas eliminando la cadena de texto "Presidencia de la República  " de las mismas
