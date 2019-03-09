@@ -76,7 +76,7 @@ bd_palabras %>%
   summarise(num_palabras = n()) %>% 
   ungroup() %>%
   ggplot(aes(num_palabras)) +
-  geom_histogram(breaks = seq(0, 3200, 200), color = "white") + 
+  geom_histogram(breaks = seq(0, 3200, 200), fill = "#a50300", color = "white") + 
   scale_x_continuous(breaks = seq(200, 3200, 400), labels = comma) +
   scale_y_continuous(breaks = seq(0, 16, 2)) +
   labs(title = str_wrap(str_to_upper("Distribución del número de palabras por discurso mencionadas por AMLO"), width = 60),
@@ -109,7 +109,7 @@ bd_palabras %>%
   mutate(ranking = min_rank(-n)) %>% 
   filter(ranking <= 30) %>% 
   ggplot(aes(fct_reorder(word, n), n)) +
-  geom_col() +
+  geom_col(fill = "#a50300") +
   coord_flip() +
   scale_y_continuous(breaks = seq(0, 2000, 250)) +
   labs(title = "Las 30 palabras más mencionadas por AMLO en sus discursos",
@@ -141,7 +141,7 @@ bd_bigramas %>%
   filter(ranking <= 30) %>% 
   arrange(-n)
 ggplot(aes(fct_reorder(bigrama, n), n)) +
-  geom_col() +
+  geom_col(fill = "#a50300") +
   coord_flip() +
   # scale_y_continuous(breaks = seq(0, 2000, 250)) +
   labs(title = "Los 30 bigramas más mencionadas por AMLO en sus discursos",
@@ -158,7 +158,7 @@ bd_trigramas %>%
   mutate(ranking = min_rank(-n)) %>% 
   filter(ranking <= 30) %>% 
   ggplot(aes(fct_reorder(trigrama, n), n)) +
-  geom_col() +
+  geom_col(fill = "#a50300") +
   coord_flip() +
   labs(title = "Los 30 trigramas más mencionadas por AMLO en sus discursos",
        subtitle = "Cifras calculadas después de eliminar stopwords",
@@ -174,7 +174,7 @@ bd_cuatrigramas %>%
   mutate(ranking = min_rank(-n)) %>% 
   filter(ranking <= 30) %>% 
   ggplot(aes(fct_reorder(cuatrigrama, n), n)) +
-  geom_col() +
+  geom_col(fill = "#a50300") +
   coord_flip() +
   labs(title = "Los 30 cuatrigramas más mencionadas por AMLO en sus discursos",
        subtitle = "Cifras calculadas después de eliminar stopwords",
