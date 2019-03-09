@@ -13,3 +13,13 @@ bd_palabras_todas %>%
   ungroup() %>% 
   mutate(total_palabras = sum(num_palabras)) %>% 
   arrange(-num_palabras)
+
+### Generar lista de stopwords en español ----
+# Código adaptado de aquí: http://jvera.rbind.io/post/2017/10/16/spanish-stopwords-for-tidytext-package/
+
+# Definir stopwords ----
+word <-  c(tm::stopwords("spanish"))
+custom_stop_words <- tibble(word,
+                            lexicon = "custom")
+
+custom_stop_words %>% arrange(word) %>%  print(n = nrow(.))
