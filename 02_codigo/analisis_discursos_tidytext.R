@@ -68,3 +68,20 @@ bd_cuatrigramas <-
   filter(!palabra_2 %in% custom_stop_words$word) %>% 
   filter(!palabra_3 %in% custom_stop_words$word) %>% 
   filter(!palabra_4 %in% custom_stop_words$word)
+
+
+### Histograma del número de palabras mencionadas por AMLO por discurso ----
+bd_palabras %>% 
+  group_by(discurso_id) %>% 
+  summarise(num_palabras = n()) %>% 
+  ungroup() %>%
+  ggplot(aes(num_palabras)) +
+  geom_histogram(breaks = seq(0, 3200, 200), color = "white") + 
+  scale_x_continuous(breaks = seq(200, 3200, 400), labels = comma) +
+  scale_y_continuous(breaks = seq(0, 16, 2)) +
+  labs(title = str_wrap(str_to_upper("Distribución del número de palabras por discurso mencionadas por AMLO"), width = 60),
+       subtitle = "La gráfica incluye datos de los 76 discursos pronunciados por AMLO entre el 1 de diciembre de 2018 y el 6 de marzo de 2019",
+       x = "\nNúmero de palabras",
+       y = "Número de discursos\n") +
+  tema +
+  ggsave("03_graficas/distribucion_frecuencia_palabras_por_discurso.png", width = 15, height = 10, dpi = 200)
