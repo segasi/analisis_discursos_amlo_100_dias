@@ -80,7 +80,7 @@ bd_palabras %>%
   scale_x_continuous(breaks = seq(200, 3200, 400), labels = comma) +
   scale_y_continuous(breaks = seq(0, 16, 2)) +
   labs(title = str_wrap(str_to_upper("Distribución del número de palabras por discurso mencionadas por AMLO"), width = 60),
-       subtitle = "La gráfica incluye datos de los 76 discursos pronunciados por AMLO entre el 1 de diciembre de 2018 y el 6 de marzo de 2019",
+       subtitle = "La gráfica incluye datos de los 76 discursos pronunciados por AMLO entre el 1 de diciembre de 2018 y el 6 de marzo de 2019.\nLa gráfica excluye stopwords.",
        x = "\nNúmero de palabras",
        y = "Número de discursos\n") +
   tema +
