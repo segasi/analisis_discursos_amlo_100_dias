@@ -23,3 +23,10 @@ custom_stop_words <- tibble(word,
                             lexicon = "custom")
 
 custom_stop_words %>% arrange(word) %>%  print(n = nrow(.))
+
+
+### Generar data frame con las palabras (unigramas) pronuncidas en cada discurso, después de eliminar stopwords ----
+bd_palabras <- 
+  discursos_amlo %>% 
+  unnest_tokens(word, texto) %>% 
+  anti_join(custom_stop_words) # Eliminar stopwords 
