@@ -148,3 +148,10 @@ titulos_discursos <-
   mutate(titulo = unlist(titulo), 
          titulo = str_replace_all(titulo, "\\n", ""),
          titulo = str_trim(titulo))
+
+# Unir datos en un solo data frame ----
+discursos_amlo <- 
+  discursos_amlo %>% 
+  left_join(fechas_discursos) %>% 
+  left_join(titulos_discursos) %>% 
+  select(fecha, titulo, texto, url, -cuerpo)
