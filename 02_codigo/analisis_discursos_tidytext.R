@@ -139,15 +139,15 @@ bd_bigramas %>%
   count(bigrama, sort = TRUE) %>% 
   mutate(ranking = min_rank(-n)) %>% 
   filter(ranking <= 30) %>% 
-  arrange(-n)
-ggplot(aes(fct_reorder(bigrama, n), n)) +
+  arrange(-n) %>% 
+  ggplot(aes(fct_reorder(bigrama, n), n)) +
   geom_col(fill = "#a50300") +
   coord_flip() +
   # scale_y_continuous(breaks = seq(0, 2000, 250)) +
   labs(title = "Los 30 bigramas más mencionadas por AMLO en sus discursos",
        subtitle = "Cifras calculadas después de eliminar stopwords",
        x = NULL,
-       y = NULL) +
+       y = "\nNúm. de veces pronunciada") +
   tema +
   ggsave("03_graficas/30_bigramas_mas_mencionadas_por_amlo.png", width = 15, height = 10, dpi = 200)
 
@@ -163,7 +163,7 @@ bd_trigramas %>%
   labs(title = "Los 30 trigramas más mencionadas por AMLO en sus discursos",
        subtitle = "Cifras calculadas después de eliminar stopwords",
        x = NULL,
-       y = NULL) +
+       y = "\nNúm. de veces pronunciada") +
   tema +
   ggsave("03_graficas/30_trigramas_mas_mencionadas_por_amlo.png", width = 15, height = 10, dpi = 200)
 
@@ -176,8 +176,9 @@ bd_cuatrigramas %>%
   ggplot(aes(fct_reorder(cuatrigrama, n), n)) +
   geom_col(fill = "#a50300") +
   coord_flip() +
-  labs(title = "Los 30 cuatrigramas más mencionadas por AMLO en sus discursos",
+  labs(title = "Los 30 cuatrigramas más mencionadas por AMLO en sus\ndiscursos",
        subtitle = "Cifras calculadas después de eliminar stopwords",
        x = NULL,
-       y = NULL) +
+       y = "\nNúm. de veces pronunciada") +
+  tema +
   ggsave("03_graficas/30_cuatrigramas_mas_mencionadas_por_amlo.png", width = 15, height = 10, dpi = 200)
