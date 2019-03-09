@@ -105,3 +105,16 @@ url_disc_amlo <-
                  "https://www.gob.mx/presidencia/es/articulos/mensaje-del-presidente-andres-manuel-lopez-obrador-durante-entrega-de-programas-y-tandas-para-el-bienestar-en-sonora?idiom=es",
                  "https://www.gob.mx/presidencia/es/articulos/mensaje-del-presidente-andres-manuel-lopez-obrador-durante-el-programa-de-mejoramiento-urbano?idiom=es",
                  "https://www.gob.mx/presidencia/es/articulos/mensaje-del-presidente-andres-manuel-lopez-obrador-durante-la-entrega-de-programas-integrales-de-bienestar-en-manzanillo?idiom=es"))
+
+# Extraer discursos ----
+discursos_amlo <- 
+  url_disc_amlo %>% 
+  mutate(cuerpo = map(.x = url,
+                      .f = ~ read_html(.) %>% 
+                        html_nodes(".article-body")))  
+
+discursos_amlo <- 
+  discursos_amlo %>%
+  mutate(texto = map_chr(cuerpo, ~ html_nodes(.x, "p") %>%
+                           html_text() %>%
+                           paste0(collapse = " ")))
