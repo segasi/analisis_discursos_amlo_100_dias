@@ -150,3 +150,19 @@ ggplot(aes(fct_reorder(bigrama, n), n)) +
        y = NULL) +
   tema +
   ggsave("03_graficas/30_bigramas_mas_mencionadas_por_amlo.png", width = 15, height = 10, dpi = 200)
+
+
+### Gráfica de los 30 trigramas más mencionadas por AMLO en sus discursos ----
+bd_trigramas %>%
+  count(trigrama, sort = TRUE) %>% 
+  mutate(ranking = min_rank(-n)) %>% 
+  filter(ranking <= 30) %>% 
+  ggplot(aes(fct_reorder(trigrama, n), n)) +
+  geom_col() +
+  coord_flip() +
+  labs(title = "Los 30 trigramas más mencionadas por AMLO en sus discursos",
+       subtitle = "Cifras calculadas después de eliminar stopwords",
+       x = NULL,
+       y = NULL) +
+  tema +
+  ggsave("03_graficas/30_trigramas_mas_mencionadas_por_amlo.png", width = 15, height = 10, dpi = 200)
