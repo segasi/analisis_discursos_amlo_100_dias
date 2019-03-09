@@ -38,3 +38,22 @@ bd_bigramas <-
   separate(bigrama, c("palabra_1", "palabra_2"), sep = " ", remove = F) %>% 
   filter(!palabra_1 %in% custom_stop_words$word) %>%  # Eliminar stopwords
   filter(!palabra_2 %in% custom_stop_words$word) 
+
+### Generar data frame con las tres palabras (trigramas) pronuncidas en cada discurso, después de eliminar stopwords ----
+bd_trigramas <- 
+  discursos_amlo %>%
+  unnest_tokens(trigrama, texto, token = "ngrams", n = 3) %>% 
+  separate(trigrama, c("palabra_1", "palabra_2", "palabra_3"), sep = " ", remove = FALSE) %>%
+  filter(!palabra_1 %in% custom_stop_words$word) %>% # Eliminar stopwords
+  filter(!palabra_2 %in% custom_stop_words$word) %>% 
+  filter(!palabra_3 %in% custom_stop_words$word)
+
+### Generar data frame con las cuatro palabras (cuatrigramas) pronuncidas en cada discurso, después de eliminar stopwords ----
+bd_cuatrigramas <- 
+  discursos_amlo %>%
+  unnest_tokens(cuatrigrama, texto, token = "ngrams", n = 4) %>% 
+  separate(cuatrigrama, c("palabra_1", "palabra_2", "palabra_3", "palabra_4"), sep = " ", remove = FALSE) %>%
+  filter(!palabra_1 %in% custom_stop_words$word) %>% # Eliminar stopwords
+  filter(!palabra_2 %in% custom_stop_words$word) %>% 
+  filter(!palabra_3 %in% custom_stop_words$word) %>% 
+  filter(!palabra_4 %in% custom_stop_words$word)
