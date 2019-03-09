@@ -85,3 +85,19 @@ bd_palabras %>%
        y = "Número de discursos\n") +
   tema +
   ggsave("03_graficas/distribucion_frecuencia_palabras_por_discurso.png", width = 15, height = 10, dpi = 200)
+
+
+### Nube de palabras de las 100 palabras más mencionadas por AMLO en sus discursos ----
+
+set.seed(25) # Plantar una semillita de aleatoriedad... ¡turun pum pas!  
+bd_palabras %>%
+  count(word, sort = TRUE) %>% 
+  mutate(ranking = min_rank(-n)) %>% 
+  filter(ranking <= 100) %>% 
+  mutate(angulo = 90 * sample(c(0, 1), n(), replace = TRUE, prob = c(60, 40))) %>% # La variable ángulo permitirá rotar algunas palabras 90 grados de forma aleatoria
+  ggplot(aes(label = word, size = n, color = n, angle = angulo)) +
+  geom_text_wordcloud(shape = "circle", area_corr_power = 1) +
+  scale_radius(range = c(0, 20), limits = c(0, NA)) +
+  scale_color_gradient(low = "grey60", high = "darkred") +
+  tema +
+  ggsave("03_graficas/100_palabras_mas_frecuentes_amlo.png", width = 7, height = 5, dpi = 300)
