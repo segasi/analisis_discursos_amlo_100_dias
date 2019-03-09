@@ -30,3 +30,11 @@ bd_palabras <-
   discursos_amlo %>% 
   unnest_tokens(word, texto) %>% 
   anti_join(custom_stop_words) # Eliminar stopwords 
+
+### Generar data frame con las dos palabras (bigramas) pronuncidas en cada discurso, después de eliminar stopwords ----
+bd_bigramas <- 
+  discursos_amlo %>%
+  unnest_tokens(bigrama, texto, token = "ngrams", n = 2) %>% 
+  separate(bigrama, c("palabra_1", "palabra_2"), sep = " ", remove = F) %>% 
+  filter(!palabra_1 %in% custom_stop_words$word) %>%  # Eliminar stopwords
+  filter(!palabra_2 %in% custom_stop_words$word) 
